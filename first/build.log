@@ -1,0 +1,13 @@
+make -C /lib/modules/5.13.0-30-generic/build M=/home/macro/github/linux-stack/first modules
+make[1]: Entering directory '/usr/src/linux-headers-5.13.0-30-generic'
+  CC [M]  /home/macro/github/linux-stack/first/helloworld.o
+  MODPOST /home/macro/github/linux-stack/first/Module.symvers
+  CC [M]  /home/macro/github/linux-stack/first/helloworld.mod.o
+  LD [M]  /home/macro/github/linux-stack/first/helloworld.ko
+  BTF [M] /home/macro/github/linux-stack/first/helloworld.ko
+make[1]: Leaving directory '/usr/src/linux-headers-5.13.0-30-generic'
+
+make -C /lib/modules/5.13.0-30-generic/build M=/home/macro/github/linux-stack/first clean 
+make[1]: Entering directory '/usr/src/linux-headers-5.13.0-30-generic'
+  CLEAN   /home/macro/github/linux-stack/first/Module.symvers
+make[1]: Leaving directory '/usr/src/linux-headers-5.13.0-30-generic'

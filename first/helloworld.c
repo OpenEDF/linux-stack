@@ -5,15 +5,15 @@
 // init function
 static int __init hello_init(void)
 {
-    printk(KERN_EMERG, "[ KERN_EMERG ] Hello World Module Init.\n");
+    printk(KERN_ALERT "[ OK ] Hello World Module Init.\n");
     printk("[ default ] Hello World Module Init.\n");
+    return 0;
 }
 
 // exit function
-static int __exit hello_exit(void)
+static void __exit hello_exit(void)
 {
-    printk("[ default ] Hello World Module Exit.\n");
-    return 0;
+    printk(KERN_ALERT "[ default ] Hello World Module Exit.\n");
 }
 
 module_init(hello_init);
