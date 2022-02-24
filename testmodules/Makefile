@@ -14,5 +14,5 @@ clean:
 	rm -rf *.o *~ core .depend .*.cmd *.ko *.mod.c .tmp_versions Module* modules* *.mod
 
 else
- obj-m :=kiwi_sdio.o 
+ obj-m :=hello.o 
 endif
