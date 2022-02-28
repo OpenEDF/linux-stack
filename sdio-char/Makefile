@@ -11,11 +11,10 @@ PWD := $(shell pwd)
 
 # Define cross-compiler toolchain
 # CROSS_COMPILE=arm-linux-guneabi-
+# ARCH=arm
 
 # Define target soc arch
-# ARCH=arm
-obj-m := helloworld.o
-
+obj-m := sdio.o
 # --------------------------------------------------------------------------
 all:
 	$(MAKE) -C $(KERNELDIR) M=$(PWD) modules
