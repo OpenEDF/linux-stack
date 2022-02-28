@@ -201,6 +201,12 @@ struct sdio_driver test_sdio_driver = {
 };
 
 /*
+ * module init function and exit function
+ * */
+static int __init sdio_init(void);
+static void __exit sdio_exit(void);
+
+/*
  * name : sdio_init
  * brief: linux module init func
  * param: none
