@@ -8,19 +8,28 @@ KERNELDIR ?= /lib/modules/$(shell uname -r)/build
 # Define the specified Linux kernel source code
 #KERNELDIR ?= /home/macro/linux/linux-5.10
 PWD := $(shell pwd)
+APP := test
+GCC = gcc
 
 # Define cross-compiler toolchain
 # CROSS_COMPILE=arm-linux-guneabi-
 # ARCH=arm
 
 # Define target soc arch
-obj-m := sdio.o
+obj-m := driver/sdio.o
+
+# App src file
+app_src := app/main.c
+
 # --------------------------------------------------------------------------
 all:
 	$(MAKE) -C $(KERNELDIR) M=$(PWD) modules
 
-.PHONY: clean
+app:
+	$(GCC) $(app_src) -o $(APP)
+
+.PHONY: clean app
 clean:
 	$(MAKE) -C $(KERNELDIR) M=$(PWD) clean 
-
+	rm test
 # --------------------------------------------------------------------------
