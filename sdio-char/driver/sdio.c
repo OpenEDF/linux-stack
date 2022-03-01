@@ -20,7 +20,7 @@
 /*
  * define the sdio function id and manfacturer cdoe
  * */
-#define TEST_SDIO_VENDOR_ID 0x0001
+#define TEST_SDIO_VENDOR_ID 0x0000
 #define TEST_SDIO_DEVICE_ID 0x0000
 
 /*
@@ -159,7 +159,9 @@ static const struct of_device_id test_sdio_of_table[] = {
 
 /*
  * name : test_sdio_probe
- * brief: sdio probe function
+ * brief: sdio probe function, This functions is called by kernel when the
+ *        driver provied vendor and device IDs arm match. All the initialization
+ *        work is done here.
  * param: sdio_func: sdio function devices
  * param: sdio_device_id: sdio device id table
  * ret  : sdio driver probe state
@@ -167,6 +169,15 @@ static const struct of_device_id test_sdio_of_table[] = {
 static int test_sdio_probe(struct sdio_func *func, const struct sdio_device_id *id)
 {
     int ret = 0;
+
+    /* debug sdio information */
+    pr_info("%s: Info: vendor=0x%4.04X device =0x%4.04X class=%d function=%d\n", SDIO_DRIVER_NAME, \
+            func->vendor, func->device, func->class, func->num);
+
+    /* sdio enabel function */
+    sdio_claim_host(func);
+
+
     /* Request dynamic allocation of a device major number */
     if (sdio_dev.major) {
         sdio_dev.devid = MKDEV(sdio_dev.major, 0);
@@ -186,7 +197,7 @@ static int test_sdio_probe(struct sdio_func *func, const struct sdio_device_id *
     }
 
     /* Create device */
-    sdio_dev.device = device_create(sdio_dev.class, NULL, sdio_dev.devid, NULL, SDIO_DRIVER_NAME); // sysfs 
+    SDIO_NAME_DEV_TREE_MATCH.device = device_create(sdio_dev.class, NULL, sdio_dev.devid, NULL, SDIO_DRIVER_NAME); // sysfs
     if (IS_ERR(sdio_dev.device)) {
         class_destroy(sdio_dev.class);
         unregister_chrdev_region(sdio_dev.devid, SDIO_DRIVER_CNT);
@@ -203,7 +214,7 @@ static int test_sdio_probe(struct sdio_func *func, const struct sdio_device_id *
         return ret;
     }
 
-    pr_info("%s: device registerted.\n", SDIO_DRIVER_NAME); 
+    pr_info("%s: device registerted.\n", SDIO_DRIVER_NAME);
     return ret;
 }
 
@@ -223,7 +234,7 @@ static void test_sdio_remove(struct sdio_func *func)
     class_destroy(sdio_dev.class);
     unregister_chrdev_region(sdio_dev.devid, SDIO_DRIVER_CNT);
 
-    pr_info("%s: device unregisterted.\n", SDIO_DRIVER_NAME); 
+    pr_info("%s: device unregisterted.\n", SDIO_DRIVER_NAME);
 }
 
 /*
@@ -301,5 +312,6 @@ MODULE_LICENSE("GPL");
 MODULE_AUTHOR("Macro, <makermuyi@gmail.com>");
 MODULE_DESCRIPTION("Raspbeery pi sdio test");
 MODULE_VERSION("0.0.1");
-
+//MODULE_SUPPORT_DEVICE("");
+//MODULE_FIRMWARE("")
 /*------------------------ end -----------------------*/
