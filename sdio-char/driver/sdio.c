@@ -167,6 +167,41 @@ static const struct of_device_id test_sdio_of_table[] = {
 static int test_sdio_probe(struct sdio_func *func, const struct sdio_device_id *id)
 {
     int ret = 0;
+    /* Request dynamic allocation of a device major number */
+    if (sdio_dev.major) {
+        sdio_dev.devid = MKDEV(sdio_dev.major, 0);
+        register_chrdev_region(sdio_dev.devid, SDIO_DRIVER_CNT, SDIO_DRIVER_NAME);
+    } else {
+        if ((ret = alloc_chrdev_region(&sdio_dev.devid, 0, SDIO_DRIVER_CNT, SDIO_DRIVER_NAME)) < 0) {
+            return ret;
+        }
+        sdio_dev.major = MAJOR(sdio_dev.devid);
+    }
+
+    /* Create class */
+    sdio_dev.class = class_create(THIS_MODULE, SDIO_DRIVER_NAME);
+    if (IS_ERR(sdio_dev.class)) {
+        unregister_chrdev_region(sdio_dev.devid, SDIO_DRIVER_CNT);
+        return PTR_ERR(sdio_dev.class);
+    }
+
+    /* Create device */
+    sdio_dev.device = device_create(sdio_dev.class, NULL, sdio_dev.devid, NULL, SDIO_DRIVER_NAME); // sysfs 
+    if (IS_ERR(sdio_dev.device)) {
+        class_destroy(sdio_dev.class);
+        unregister_chrdev_region(sdio_dev.devid, SDIO_DRIVER_CNT);
+        return PTR_ERR(sdio_dev.device);
+    }
+
+    /* Register char device, bind file operations */
+    cdev_init(&sdio_dev.cdev, &test_sdio_fops);
+    if ((ret = cdev_add(&sdio_dev.cdev, sdio_dev.devid, SDIO_DRIVER_CNT)) < 0)
+    {
+        device_destroy(sdio_dev.class, SDIO_DRIVER_CNT);
+        class_destroy(sdio_dev.class);
+        unregister_chrdev_region(sdio_dev.devid, SDIO_DRIVER_CNT);
+        return ret;
+    }
 
     pr_info("%s: device registerted.\n", SDIO_DRIVER_NAME); 
     return ret;
@@ -180,6 +215,14 @@ static int test_sdio_probe(struct sdio_func *func, const struct sdio_device_id *
  */
 static void test_sdio_remove(struct sdio_func *func)
 {
+    /* Deleted device */
+    cdev_del(&sdio_dev.cdev);
+    device_destroy(sdio_dev.class, sdio_dev.devid);
+
+    /* Unregister device */
+    class_destroy(sdio_dev.class);
+    unregister_chrdev_region(sdio_dev.devid, SDIO_DRIVER_CNT);
+
     pr_info("%s: device unregisterted.\n", SDIO_DRIVER_NAME); 
 }
 
@@ -227,43 +270,6 @@ static int __init sdio_init(void)
         pr_err("%s: Success register as sdio driver.\n", SDIO_DRIVER_NAME);
     }
 
-    /* Request dynamic allocation of a device major number */
-    if (sdio_dev.major) {
-        sdio_dev.devid = MKDEV(sdio_dev.major, 0);
-        register_chrdev_region(sdio_dev.devid, SDIO_DRIVER_CNT, SDIO_DRIVER_NAME);
-    } else {
-        if ((ret = alloc_chrdev_region(&sdio_dev.devid, 0, SDIO_DRIVER_CNT, SDIO_DRIVER_NAME)) < 0) {
-            return ret;
-        }
-        sdio_dev.major = MAJOR(sdio_dev.devid);
-    }
-
-    /* Create class */
-    sdio_dev.class = class_create(THIS_MODULE, SDIO_DRIVER_NAME);
-    if (IS_ERR(sdio_dev.class)) {
-        unregister_chrdev_region(sdio_dev.devid, SDIO_DRIVER_CNT);
-        return PTR_ERR(sdio_dev.class);
-    }
-
-    /* Create device */
-    sdio_dev.device = device_create(sdio_dev.class, NULL, sdio_dev.devid, NULL, SDIO_DRIVER_NAME); // sysfs 
-    if (IS_ERR(sdio_dev.device)) {
-        class_destroy(sdio_dev.class);
-        unregister_chrdev_region(sdio_dev.devid, SDIO_DRIVER_CNT);
-        return PTR_ERR(sdio_dev.device);
-    }
-
-    /* Register char device, bind file operations */
-    cdev_init(&sdio_dev.cdev, &test_sdio_fops);
-    if ((ret = cdev_add(&sdio_dev.cdev, sdio_dev.devid, SDIO_DRIVER_CNT)) < 0)
-    {
-        device_destroy(sdio_dev.class, SDIO_DRIVER_CNT);
-        class_destroy(sdio_dev.class);
-        unregister_chrdev_region(sdio_dev.devid, SDIO_DRIVER_CNT);
-        return ret;
-    }
-
-    pr_info("%s: device registerted.\n", SDIO_DRIVER_NAME); 
     return ret;
 }
 
@@ -277,14 +283,6 @@ static void __exit sdio_exit(void)
 {
     /* unregister sdio driver */
     sdio_unregister_driver(&test_sdio_driver);
-
-    /* Deleted device */
-    cdev_del(&sdio_dev.cdev);
-    device_destroy(sdio_dev.class, sdio_dev.devid);
-
-    /* Unregister device */
-    class_destroy(sdio_dev.class);
-    unregister_chrdev_region(sdio_dev.devid, SDIO_DRIVER_CNT);
 
     pr_info("Exit %s driver module.\n", SDIO_DRIVER_NAME);
 }
