@@ -215,6 +215,9 @@ static int test_sdio_probe(struct sdio_func *func, const struct sdio_device_id *
     }
 
     pr_info("%s: device registerted.\n", SDIO_DRIVER_NAME);
+
+
+
     return ret;
 }
 
@@ -233,8 +236,14 @@ static void test_sdio_remove(struct sdio_func *func)
     /* Unregister device */
     class_destroy(sdio_dev.class);
     unregister_chrdev_region(sdio_dev.devid, SDIO_DRIVER_CNT);
-
     pr_info("%s: device unregisterted.\n", SDIO_DRIVER_NAME);
+
+    /* Remove the sdio device */
+    sdio_claim_host(func);
+    sdio_release_irq(func);
+    sdio_disable_func(func);
+    sdio_release_host(func);
+    pr_info("%s: device remove.\n", SDIO_DRIVER_NAME);
 }
 
 /*
