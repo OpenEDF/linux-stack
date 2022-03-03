@@ -31,5 +31,5 @@ app:
 .PHONY: clean app
 clean:
 	$(MAKE) -C $(KERNELDIR) M=$(PWD) clean 
-	rm test
+	rm -rf test
 # --------------------------------------------------------------------------
