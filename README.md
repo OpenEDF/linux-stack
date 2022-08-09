@@ -12,3 +12,5 @@ Linux driver and unix env programming
 2. send the command from host to slave
 
 ## device tree driver
+## add sdio wifi driver
+## add bt uart driver
