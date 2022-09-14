@@ -197,7 +197,7 @@ static int test_sdio_probe(struct sdio_func *func, const struct sdio_device_id *
     }
 
     /* Create device */
-    SDIO_NAME_DEV_TREE_MATCH.device = device_create(sdio_dev.class, NULL, sdio_dev.devid, NULL, SDIO_DRIVER_NAME); // sysfs
+    sdio_dev.device = device_create(sdio_dev.class, NULL, sdio_dev.devid, NULL, SDIO_DRIVER_NAME); // sysfs
     if (IS_ERR(sdio_dev.device)) {
         class_destroy(sdio_dev.class);
         unregister_chrdev_region(sdio_dev.devid, SDIO_DRIVER_CNT);
