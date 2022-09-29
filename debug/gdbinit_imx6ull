@@ -1,0 +1,14 @@
+# i.mx6ull Standard gdb debug settings file
+set history filename ~/.gdb_history
+set history save on
+set print pretty on
+set print object on
+set print vtbl on
+set pagination off
+set output-radix 16
+
+set $new=1
+######## system function ########
+define vm
+target extended-remote localhost:3350
+end
