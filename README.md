@@ -10,6 +10,7 @@ Linux driver and unix env programming
 # TO-DO
 1. add rpi-sdio driver
 2. send the command from host to slave
+3. add i.mx6ull debug cfg file and guide
 
 ## device tree driver
 ## add sdio wifi driver
