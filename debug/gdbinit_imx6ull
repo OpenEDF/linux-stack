@@ -1,4 +1,11 @@
 # i.mx6ull Standard gdb debug settings file
+# add command
+#
+# define <command>
+#    <code>
+#end
+#
+
 set history filename ~/.gdb_history
 set history save on
 set print pretty on
