@@ -175,5 +175,6 @@
         =>
 
 5.Guide for stm32mp157 mini:
+     5.1 Connect JTAG pin to ST-Link V2:
 
         
