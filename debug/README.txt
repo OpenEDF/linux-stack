@@ -1,5 +1,5 @@
 1. debug i.mx6ull need list:
-    1.1 jtag adapter
+    1.1 jtag adapter（add ftdi and j-link）
     1.2 i.mx6ull board (The JTAG pin is connect the extend gpio)
     1.3 interface cfg file
     1.4 target cfg file
