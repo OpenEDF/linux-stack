@@ -32,7 +32,7 @@
     4.3 Log for connect success:
         Open On-Chip Debugger 0.11.0+dev-02177-g898e464d7 (2021-12-23-17:02)
         Licensed under GNU GPL v2
-        
+
              .
             / \                     1. Mixing signed and unsigned integers in arithmetic operations
             | |                     2. Overstepping Array Boundaries
@@ -142,7 +142,7 @@
         > load_image /home/macro/imx6ull-devel/uboot/u-boot.bin 0x87800000 bin
         434728 bytes written at address 0x87800000
         downloaded 434728 bytes in 3.137619s (135.306 KiB/s)
-        
+
         > resume 0x87800000
 
     4.6 Log output:
@@ -158,7 +158,7 @@
         NAND:  256 MiB
         MMC:   FSL_SDHC: 0
         *** Warning - bad CRC, using default environment
-        
+
         Display: TFT43AB (480x272)
         Video: 480x272x24
         In:    serial
@@ -166,7 +166,7 @@
         Err:   serial
         Net:   FEC0
         Error: FEC0 address not set.
-        
+
         Boot from USB for mfgtools
         Use default environment for                              mfgtools
         Run bootcmd_mfg: run mfgtool_args;bootz ${loadaddr} ${initrd_addr} ${fdt_addr};
@@ -174,7 +174,12 @@
         Bad Linux ARM zImage magic!
         =>
 
+    4.7 Use J-linlk V11:
+        1. Connect nTRST pin between J-link and Board, "Can't assert SRST: nSRST signal is not defined" error meaage will not show.
+        2. Use Jlink Command:
+        $sudo openocd -f jlink.cfg -f imx6ull.cfg
+
 5.Guide for stm32mp157 mini:
      5.1 Connect JTAG pin to ST-Link V2:
 
-        
+
