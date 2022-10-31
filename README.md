@@ -16,4 +16,4 @@ Linux driver and unix env programming
 ## add sdio wifi driver
 ## add bt uart driver
 ## add device tree example
-## add pci driver
+## add pcie driver
