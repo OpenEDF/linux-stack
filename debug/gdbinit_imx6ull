@@ -16,6 +16,6 @@ set output-radix 16
 
 set $new=1
 ######## system function ########
-define vm
-target extended-remote localhost:3350
+define con
+target extended-remote localhost:3333
 end
