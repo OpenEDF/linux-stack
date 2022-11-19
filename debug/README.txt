@@ -181,5 +181,78 @@
 
 5.Guide for stm32mp157 mini:
      5.1 Connect JTAG pin to ST-Link V2:
+            stm32mp157                      JTAG-Board
+        JTAG---------JTAG_TCK             ---------> TCK
+        JTAG---------JTAG_TMS             ---------> TMS
+        JTAG---------JTAG_TDI             ---------> TDI
+        JTAG---------JTAG_TDO             ---------> TDO
+        JTAG---------JTAG_nTRST           ---------> NRST
+        JTAG---------JTAG_RST             ---------> NRST
+        JTAG---------GND                  ---------> GND
+
+    5.3 Run command: sudo openocd -f stm32mp157_board.cfg
+
+    5.4 Log is connect successful:
+        Open On-Chip Debugger 0.11.0+dev-02177-g898e464d7 (2021-12-23-17:02)
+        Licensed under GNU GPL v2
+
+             .
+            / \                     1. Mixing signed and unsigned integers in arithmetic operations
+            | |                     2. Overstepping Array Boundaries
+            |.|                     3. Missing out the Base Condition in Recursive Function
+            |.|                     4. Using character constants instead of string literals, and vice versa
+            |:|      __             5. Floating point literals are of type double by default
+          ,_|:|_,   /  )            6. Forgetting to free memory
+            (Oo    / _I_            7. Adding a semicolon to a #define
+             +\ \  || __|           8. Be careful with semicolons
+                \ \||___|
+                  \ /.:.\-\         9. Mistakenly writing = instead of == when comparing
+                   |.:. /-----\     10. Copying too much
+                   |___|::oOo::|
+                   /   |:<_T_>:|    11. Macros are simple string replacements
+                  |_____\ ::: /
+                   | |  \ \:/       [http://www.wuqi-tech.com/]
+                   | |   | |        Buletooth: Beetle
+           [Debug] \ /   | \__      WiFi: Hawk Kiwi
+                   / |   \____\
+                   `='
+                 =================================
+        For bug reports, read
+                http://openocd.org/doc/doxygen/bugs.html
+        Info : Listening on port 6666 for tcl connections
+        Info : Listening on port 4444 for telnet connections
+        Info : STLINK V2J29S7 (API v2) VID:PID 0483:3748
+        Info : Target voltage: 3.137349
+        Info : clock speed 4500 kHz
+        Info : stlink_dap_op_connect(connect)
+        Info : JTAG IDCODE 0x6ba00477
+        Info : stlink_dap_op_connect(connect)
+        Info : JTAG IDCODE 0x6ba00477
+        [stm32mp15x.ap1] Target successfully examined.
+        [stm32mp15x.ap2] Target successfully examined.
+        Info : stm32mp15x.cm4: Cortex-M4 r0p1 processor detected
+        Info : stm32mp15x.cm4: target has 6 breakpoints, 4 watchpoints
+        [stm32mp15x.axi] Target successfully examined.
+        Info : stm32mp15x.cpu0: hardware has 6 breakpoints, 4 watchpoints
+        [stm32mp15x.cpu0] Target successfully examined.
+        Info : stm32mp15x.cpu1: hardware has 6 breakpoints, 4 watchpoints
+        [stm32mp15x.cpu1] Target successfully examined.
+        Info : stm32mp15x.cm4: external reset detected
+        Info : stlink_dap_op_connect(connect)
+        Info : JTAG IDCODE 0x6ba00477
+        [stm32mp15x.ap1] Target successfully examined.
+        [stm32mp15x.ap2] Target successfully examined.
+        [stm32mp15x.axi] Target successfully examined.
+        [stm32mp15x.cpu0] Target successfully examined.
+        [stm32mp15x.cpu1] Target successfully examined.
+        Info : gdb port disabled
+        Info : gdb port disabled
+        Info : gdb port disabled
+        Info : starting gdb server for stm32mp15x.cpu0 on 3333
+        Info : Listening on port 3333 for gdb connections
+        Info : starting gdb server for stm32mp15x.cm4 on 3334
+        Info : Listening on port 3334 for gdb connections
+
+
 
 

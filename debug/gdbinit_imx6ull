@@ -13,6 +13,7 @@ set print object on
 set print vtbl on
 set pagination off
 set output-radix 16
+set remotetimeout 60000
 
 set $new=1
 ######## system function ########
