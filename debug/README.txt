@@ -190,7 +190,7 @@
         JTAG---------JTAG_RST             ---------> NRST
         JTAG---------GND                  ---------> GND
 
-    5.3 Run command: sudo openocd -f stm32mp157_board.cfg
+    5.3 Run command: sudo openocd -f stm32mp157_boardi_stlink.cfg
 
     5.4 Log is connect successful:
         Open On-Chip Debugger 0.11.0+dev-02177-g898e464d7 (2021-12-23-17:02)
@@ -252,7 +252,9 @@
         Info : Listening on port 3333 for gdb connections
         Info : starting gdb server for stm32mp15x.cm4 on 3334
         Info : Listening on port 3334 for gdb connections
-
+    
+    5.5 Use J-linlk V11:
+        $sudo openocd -f stm32mp157_board_jlink.cfg
 
 
 
