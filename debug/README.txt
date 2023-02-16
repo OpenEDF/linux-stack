@@ -255,6 +255,10 @@
     
     5.5 Use J-linlk V11:
         $sudo openocd -f stm32mp157_board_jlink.cfg
+        
+6. Guide for debug Raspberry pi 4
+    6.1 Connect JTAG pin to Jlink
+    
 
 
 
