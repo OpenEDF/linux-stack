@@ -7,7 +7,7 @@ Linux driver and unix env programming
 
 ## device tree
 
-# TO-DO
+## to-do
 1. add rpi-sdio driver
 2. send the command from host to slave
 3. add i.mx6ull debug cfg file and guide
@@ -17,3 +17,7 @@ Linux driver and unix env programming
 ## add bt uart driver
 ## add device tree example
 ## add pcie driver
+## Linux Tips List：
+```
+  1. THIS_MODULE
+```
