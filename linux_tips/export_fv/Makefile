@@ -10,6 +10,7 @@ ifeq ($(KERNELRELEASE),)
     KERNELDIR ?= /home/pi/linux/
     # The current directory is passed to sub-makes as argument
     PWD := $(shell pwd)
+	FOLDER := ../export_fv
 
 modules:
 	$(MAKE) -C $(KERNELDIR) M=$(PWD) modules
@@ -20,11 +21,14 @@ modules_install:
 clean:
 	$(MAKE) -C $(KERNELDIR) M=$(PWD) clean
 
+tran:
+	scp -r $(FOLDER) pi@192.168.1.2:linux_tips/
+
 .PHONY: modules modules_install clean
 
 else
     # called from kernel build system: just declare what our modules are
-    obj-m := export_fv.o
-    obj-m := export_fv_call.o
+    obj-m += export_fv.o
+    obj-m += export_fv_call.o
              
 endif
