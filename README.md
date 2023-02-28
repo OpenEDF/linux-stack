@@ -20,4 +20,5 @@ Linux driver and unix env programming
 ## Linux Tips List：
 ```
   1. THIS_MODULE
+  2. EXPORT_SYMBOL
 ```
