@@ -56,7 +56,7 @@ static ssize_t proc_read(struct file *filp, char __user *buffer, size_t length, 
 static ssize_t proc_write(struct file *filp, const char __user *buffer, size_t length, loff_t *offset)
 {
     pr_info("proc file wrote......\n");
-    if(copy_from_user(etx_array, buffer, len)) {
+    if(copy_from_user(etx_array, buffer, length)) {
         pr_err("data write: err!\n");
     }
     return length;
