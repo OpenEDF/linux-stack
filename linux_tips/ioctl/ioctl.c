@@ -107,6 +107,12 @@ static int __init mod_int(void)
     /* create cdev strurcture */
     cdev_init(&etx_cdev, &fops);
 
+    /* adding character device to the system */
+    if((cdev_add(&etx_cdev, dev, 1)) < 0) {
+        pr_err("cannot add device to system!\n");
+        goto r_class;
+    }
+
     /* createing struct class */
     if(IS_ERR(dev_class = class_create(THIS_MODULE, "etx_cLass"))) {
         pr_err("cannot create the struct class\n");
@@ -114,8 +120,8 @@ static int __init mod_int(void)
     }
 
     /* creating device */
-    if(IS_ERR(device_create(dev_class, NULL, dev, NULL, "etx_device"))){
-        pr_err("cannot create device\n");
+    if(IS_ERR(device_create(dev_class, NULL, dev, NULL, "etx_device"))) {
+        pr_err("cannot create device 1\n");
         goto r_device;
     }
     pr_info("device driver insert...done!\n");

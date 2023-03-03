@@ -24,7 +24,10 @@ clean:
 tran:
 	scp -r $(FOLDER) pi@192.168.1.2:linux_tips/
 
-.PHONY: modules modules_install clean
+app:
+	gcc -o test_app test_app.c
+
+.PHONY: modules modules_install clean app
 
 else
     # called from kernel build system: just declare what our modules are

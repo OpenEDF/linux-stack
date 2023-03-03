@@ -1,29 +1,23 @@
 insmod log:
-[173590.614712] [PROC TEST]: Linux proc file test:
-[173590.614760] module insert...done!
+[ 1354.601389] [IOCTL TEST]: Linux proc file test:
+[ 1354.601419] Major = 239 Minor = 0
+[ 1354.601772] device driver insert...done!
 
-read:
-cat /proc/etx/etx_proc
-try_proc_array
-[173612.780736] proc file opend......
-[173612.780786] proc file read......
-[173612.984579] proc file read......
-[173612.984744] proc file released......
+write and read:
+pi@raspberrypi:~/linux_tips/ioctl $ sudo ./test_app
+Enter the number to send:
+12345678
+Writing the value to driver!
+Reading the value from driver
+Value is 12345678
+close driver!
 
-write:
-echo "macro test device" > /proc/etx/etx_proc
-[173636.509216] proc file opend......
-[173636.509297] proc file wrote......
-[173636.509323] proc file released......
-
-check:
-cat /proc/etx/etx_proc
-macro test device
-[173638.503332] proc file opend......
-[173638.503407] proc file read......
-[173638.557605] proc file read......
-[173638.557697] proc file released......
+log:
+[ 1384.138705] device file open
+[ 1388.989562] device file ioctl opeation
+[ 1388.989588] Value = 12345678
+[ 1388.989630] device file ioctl opeation
+[ 1388.989778] device file release
 
 rmmod log:
-[173638.557697] proc file released......
-[174039.322322] [PROC TEST]: Linux proc file test exit!
+[ 1419.008038] [IOCTL TEST]: Linux proc file test exit!
