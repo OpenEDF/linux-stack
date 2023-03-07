@@ -19,4 +19,11 @@ set $new=1
 ######## system function ########
 define con
 target extended-remote localhost:3333
+monitor reset init
+end
+
+define lbin
+monitor load_image /home/macro/imx6ull-devel/uboot/u-boot.bin 0x87800000 bin
+monitor load_image /home/macro/imx6ull-devel/linux-4.1.15/vmlinux.bin 0x80800000 bin
+monitor load_image /home/macro/imx6ull-devel/linux-4.1.15/arch/arm/boot/dts/imx6ul-14x14-evk-gpmi-weim.dtb 0x83000000 bin
 end
