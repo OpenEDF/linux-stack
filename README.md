@@ -21,5 +21,5 @@ Linux driver and unix env programming
 ```
   1. THIS_MODULE
   2. EXPORT_SYMBOL
-  3.
+  3. INIT SYMBOL
 ```
