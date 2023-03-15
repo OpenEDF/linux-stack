@@ -10,7 +10,7 @@ ifeq ($(KERNELRELEASE),)
     KERNELDIR ?= /home/pi/linux/
     # The current directory is passed to sub-makes as argument
     PWD := $(shell pwd)
-	FOLDER := ../timer
+	FOLDER := ../kprobes
 
 modules:
 	$(MAKE) -C $(KERNELDIR) M=$(PWD) modules
@@ -31,5 +31,5 @@ app:
 
 else
     # called from kernel build system: just declare what our modules are
-    obj-m += timer.o
+    obj-m += kprobes.o
 endif

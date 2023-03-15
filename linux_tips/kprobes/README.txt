@@ -1,13 +1,12 @@
 insmod log:
-[Sun Mar  5 02:18:35 2023] [JIFFIZES TEST]: jiffizes HZ test: system HZ is: 100
-[Sun Mar  5 02:19:03 2023] [JIFFIZES TEST]: mod_exit: module time: 27 seconds
-[Sun Mar  5 02:19:03 2023] [JIFFIZES TEST]: jiffizes HZ test exit!
-[Sun Mar  5 02:51:42 2023] [TIMER TEST]: timer test:
-
-[Sun Mar  5 02:51:47 2023] timer_callback: Timer callback function called [0]
-[Sun Mar  5 02:51:52 2023] timer_callback: Timer callback function called [1]
-[Sun Mar  5 02:51:57 2023] timer_callback: Timer callback function called [2]
-[Sun Mar  5 02:52:02 2023] timer_callback: Timer callback function called [3]
+[89917.215288] [KPROBE TEST]: mod_exit In exit
+[89920.330407] [KPROBE TEST]: mod_int In init
+[89920.382320] [KPROBE TEST]: register ketprobe done.
+[89920.382350] _printk returned 38 and took 30833 ns to execute
+[89920.382373] [KPROBE TEST]: _printk execute time test.
+[89920.382388] _printk returned 41 and took 13385 ns to execute
+[89920.382406] [KPROBE TEST]: _printk execute time test.
+[89920.382420] _printk returned 41 and took 12760 ns to execute
 
 rmmod log:
-[Sun Mar  5 02:55:21 2023] [TIMER TEST]: timer test exit!
+[90197.216481] [KPROBE TEST]: mod_exit In exit

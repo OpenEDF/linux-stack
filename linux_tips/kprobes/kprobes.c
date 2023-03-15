@@ -19,12 +19,13 @@
 #include <linux/kprobes.h>
 
 /* static variable */
-static struct kretporbe retprobe;
+struct kretprobe;
+static struct kretprobe retprobe;
 struct user_data {
     ktime_t time_stamp;
 };
 
-static int entry_handler(struct kretporbe_instance *ri, struct pt_regs *regs)
+static int entry_handler(struct kretprobe_instance *ri, struct pt_regs *regs)
 {
     struct user_data *user_data;
     if (!current->mm) return 1;
@@ -33,16 +34,17 @@ static int entry_handler(struct kretporbe_instance *ri, struct pt_regs *regs)
     return 0;
 }
 
-static int ret_handler(struct kretporbe_instance *ri, struct pt_regs *regs)
+static int ret_handler(struct kretprobe_instance *ri, struct pt_regs *regs)
 {
-    int retval = regs_return_valuse(regs);
-    struct user_data *user_data = (struct user_data *)ri->datal
-    s64 delta;
+    int retval = regs_return_value(regs);
+    struct user_data *user_data = (struct user_data *)ri->data;
+    int delta;
     ktime_t now;
 
     now = ktime_get();
     delta = ktime_to_ns(ktime_sub(now, user_data->time_stamp));
-    printk(KERN_INFO "_do_fork returned %d and took %d ns to execute\n", retval, delta);
+    printk(KERN_INFO "_printk returned %d and took %d ns to execute\n", retval, delta);
+    return 0;
 }
 
 /* module int and exit */
@@ -52,15 +54,29 @@ static void __exit mod_exit(void);
 /* module init */
 static int __init mod_int(void)
 {
-    /* Linux timer test */
+    int retval = 0x00;
+    /* Linux kprobe test */
     printk(KERN_INFO "[KPROBE TEST]: %s In init\n", __func__);
+    retprobe.entry_handler = entry_handler;
+    retprobe.kp.symbol_name = "_printk";
+    retprobe.handler = ret_handler;
+    retprobe.data_size = sizeof(struct user_data);
+    retprobe.maxactive = 20;
+    retval = register_kretprobe(&retprobe);
 
-    return 0;
+    if(retval < 0) {
+        printk(KERN_INFO "[KPROBE TEST]: register ketprobe failed, return: %d\n", retval);
+    }
+    printk(KERN_INFO "[KPROBE TEST]: register ketprobe done.\n");
+    printk(KERN_INFO "[KPROBE TEST]: _printk execute time test.\n");
+    printk(KERN_INFO "[KPROBE TEST]: _printk execute time test.\n");
+    return retval;
 }
 
 /* module exit */
 static void __exit mod_exit(void)
 {
+    unregister_kretprobe(&retprobe);
     printk(KERN_INFO "[KPROBE TEST]: %s In exit\n", __func__);
 }
 
