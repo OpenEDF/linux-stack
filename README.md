@@ -23,3 +23,4 @@ Linux driver and unix env programming
   2. EXPORT_SYMBOL
   3. INIT SYMBOL
 ```
+## linux symbol and pointer
