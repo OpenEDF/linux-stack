@@ -13,6 +13,7 @@
 #include <linux/err.h>
 #include <linux/interrupt.h>
 #include <linux/workqueue.h>
+#include <linux/delay.h>
 
 /* init the workqueue by dynamic method */
 void workqueue_fn(struct work_struct *work);
@@ -54,6 +55,8 @@ static int __init mod_int(void)
     own_workqueue = create_workqueue("own_wq");
 
     /* queue work */
+    queue_work(own_workqueue, workqueue);
+    msleep(100);
     queue_work(own_workqueue, workqueue);
 
 out:
